@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "admin",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "flowbite": "^2.1.1",
+    "flowbite-react": "^0.6.4",
     "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,7 +21,10 @@
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
+    "autoprefixer": "^10.4.16",
     "eslint-config-custom": "*",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
     "tsconfig": "*",
     "typescript": "^5.2.2"
   }
