@@ -1,6 +1,7 @@
 import { Router } from "express";
+import { prisma } from "database";
+import { acl_roles_policies, acl_roles } from "../acl.constants";
 import ACL from "../middlewares/ACL";
-import { admin, admins, allRoles, allUsers, user } from "database";
 
 export const listingsRouter = Router({});
 
@@ -9,18 +10,17 @@ listingsRouter.patch("/:id", async (req, res) => {
     const { body, params, query } = req;
     console.log({ body, params, query });
 
-    const ac = new ACL(admin.roles?.acl)
-      .perform("users", 2)
-      .perform("listings", 2)
-      .validate();
-    const {
-      users: { can: usersAc },
-      listings: { can: listingsAc },
-    } = ac;
-    console.log(1, usersAc, listingsAc);
+    let listings = await prisma.listings.findMany();
 
-    res.status(200).json({ user, ac });
+    let users = await prisma.users.findMany();
+    users = users.map((user) => ({
+      ...user,
+      acl_roles: acl_roles.find((el) => el.id === user.acl_roleId),
+    }));
+
+    res.status(200).json({ listings, users });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });
