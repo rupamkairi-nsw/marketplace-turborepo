@@ -1,4 +1,4 @@
-export default class ACL {
+export class ACL {
   roles: any;
   results: any;
 

@@ -8,16 +8,16 @@ declare global {
   }
 }
 
-export function decodeAuthHeaders(
+export function decodeXAuthHeaders(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    let xauth = req.headers["x-auth"];
-
+    let xauth = req.cookies["X-Auth"] ?? req.header("X-Auth");
     if (!xauth) return res.status(401).json({});
     xauth = JSON.parse(xauth as string);
+
     req.xauth = xauth;
 
     return next();

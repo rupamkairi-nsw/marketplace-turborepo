@@ -22,9 +22,10 @@ model users {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model acl_roles {
-  id        Int    @id(map: "acl_roles_policies_key") @default(autoincrement()) @db.SmallInt
-  name      String
-  res_users Int?   @db.SmallInt
+  id           Int    @id(map: "acl_roles_policies_key") @default(autoincrement()) @db.SmallInt
+  name         String
+  res_users    Int?   @db.SmallInt
+  res_listings Int?   @db.SmallInt
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments

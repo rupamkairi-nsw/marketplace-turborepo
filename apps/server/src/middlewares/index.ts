@@ -1,2 +1,2 @@
-export * as ACL from "./ACL";
-export { decodeAuthHeaders } from "./decode-auth-headers";
+export { ACL } from "./ACL";
+export { decodeXAuthHeaders } from "./decode-x-auth-headers";

@@ -1,14 +1,16 @@
 import { prisma } from "database";
 import { Router } from "express";
 import { acl_roles } from "../acl.constants";
-import { decodeAuthHeaders } from "../middlewares";
+import { decodeXAuthHeaders } from "../middlewares";
 
 export const meRouter = Router();
 
 meRouter.post("", async (req, res) => {
   try {
     const _user = await prisma.users.findFirst({
-      where: { userId: "suparadmin" },
+      // where: { userId: "suparadmin" },
+      // where: { userId: "admin" },
+      where: { userId: "user" },
     });
     if (!_user) return res.sendStatus(404);
     const user = {
@@ -17,6 +19,7 @@ meRouter.post("", async (req, res) => {
     };
     const auth = { id: user.id, acl_roles: user.acl_roles };
     res.setHeader("X-Auth", JSON.stringify(auth));
+    res.cookie("X-Auth", JSON.stringify(auth));
     return res.status(200).json({ user });
   } catch (error) {
     console.log(error);
@@ -24,7 +27,7 @@ meRouter.post("", async (req, res) => {
   }
 });
 
-meRouter.get("", decodeAuthHeaders, async (req, res) => {
+meRouter.get("", decodeXAuthHeaders, async (req, res) => {
   try {
     return res.status(200).json({ user: req.xauth });
   } catch (error) {

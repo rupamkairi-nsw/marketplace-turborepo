@@ -1,12 +1,17 @@
-import { Router } from "express";
 import { prisma } from "database";
-import { acl_roles_policies, acl_roles } from "../acl.constants";
+import { Router } from "express";
+import { acl_roles } from "../acl.constants";
 import { ACL } from "../middlewares";
 
 export const listingsRouter = Router({});
 
 listingsRouter.get("/", async (req, res) => {
   try {
+    const acl = new ACL(req.xauth.acl_roles)
+      .perform("res_listings", 1)
+      .validate();
+    if (!acl["res_listings"].can) return res.sendStatus(403);
+
     let listings = await prisma.listings.findMany();
     res.status(200).json({ listings });
   } catch (error) {
@@ -18,19 +23,23 @@ listingsRouter.get("/", async (req, res) => {
 listingsRouter.patch("/:id", async (req, res) => {
   try {
     const { body, params, query } = req;
-    console.log({ body, params, query });
+
+    const acl = new ACL(req.xauth.acl_roles)
+      .perform("res_listings", 3)
+      .validate();
+    if (!acl["res_listings"].can) return res.sendStatus(403);
 
     let listing = await prisma.listings.findFirst({
       where: { id: +params.id },
     });
 
-    let users = await prisma.users.findMany();
-    users = users.map((user) => ({
-      ...user,
-      acl_roles: acl_roles.find((el) => el.id === user.acl_roleId),
+    let _users = await prisma.users.findMany();
+    const users = _users.map((u) => ({
+      ...u,
+      acl_roles: acl_roles.find((el) => el.id === u.acl_roleId),
     }));
 
-    res.status(200).json({ listing, users });
+    res.status(200).json({ listing, users: _users });
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
