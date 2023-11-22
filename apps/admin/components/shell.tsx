@@ -5,12 +5,9 @@ import SideNavigation from "./side-navigation";
 import { HiLogout, HiSearch, HiX } from "react-icons/hi";
 import { HiBars3CenterLeft, HiSquares2X2 } from "react-icons/hi2";
 import Link from "next/link";
-import { useState } from "react";
 import "flowbite";
 
-export default function Shell() {
-  const [openModal, setOpenModal] = useState(false);
-
+export default function Shell({ children }) {
   return (
     <div className="antialiased bg-gray-50 dark:bg-gray-900">
       <nav className="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-30">
@@ -21,7 +18,6 @@ export default function Shell() {
               data-drawer-show="drawer-navigation"
               aria-controls="drawer-navigation"
               className="m-2 w-10 h-10 text-gray-600 md:hidden"
-              onClick={() => setOpenModal(true)}
             >
               <HiBars3CenterLeft className="h-6 w-6 text-2xl" />
             </Button>
@@ -137,7 +133,7 @@ export default function Shell() {
         <SideNavigation />
       </aside>
 
-      <MainContent />
+      <MainContent>{children}</MainContent>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ContentBreadcrumb from "./content-breadcrumb";
 
-export default function MainContent() {
+export default function MainContent({ children }) {
   const [state, setState] = useState(null);
 
   useEffect(() => {
@@ -19,48 +19,14 @@ export default function MainContent() {
         console.log(error);
       }
     })();
-
-    (async () => {
-      try {
-        const data = await (
-          await fetch("http://localhost:8000/api/listings", {
-            method: "GET",
-            credentials: "include",
-          })
-        ).json();
-        setState(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   }, []);
 
   return (
     <main className="p-4 md:ml-64 h-auto pt-20">
-      <ContentBreadcrumb />
+      {/* <ContentBreadcrumb /> */}
+      {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
 
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          <div className="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64"></div>
-        </div>
-        <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-        </div>
-        <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"></div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-          <div className="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"></div>
-        </div> */}
+      {children}
     </main>
   );
 }
