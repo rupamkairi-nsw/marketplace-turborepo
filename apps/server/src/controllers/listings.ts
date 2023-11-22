@@ -13,6 +13,7 @@ listingsRouter.get("/", async (req, res) => {
     if (!acl["res_listings"].can) return res.sendStatus(403);
 
     let listings = await prisma.listings.findMany();
+
     res.status(200).json({ listings });
   } catch (error) {
     console.log(error);
