@@ -10,7 +10,10 @@ app.use(cookieParser());
 app.use(e.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      /http(|s):\/\/(|www\.)localhost:(3000|3001)$/,
+      // /http(|s):\/\/(|www\.)localhost:[0-9]{4,}$/,
+    ],
     credentials: true,
   })
 );
