@@ -2,6 +2,7 @@
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import DataTable from "../../components/table";
 
 async function getListings() {
   return await (
@@ -14,7 +15,7 @@ async function getListings() {
 
 export default function ListingRootPage(): JSX.Element {
   // const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery({
+  const { data: { listings } = {} } = useQuery({
     queryKey: ["listings"],
     queryFn: getListings,
   });
@@ -30,8 +31,9 @@ export default function ListingRootPage(): JSX.Element {
       <div>Page</div>
       <div>
         {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
-        <pre>{JSON.stringify({ data, isLoading, isError }, null, 2)}</pre>
+        {/* <pre>{JSON.stringify({ data, isLoading, isError }, null, 2)}</pre> */}
       </div>
+      {listings && <DataTable data={listings} />}
     </main>
   );
 }

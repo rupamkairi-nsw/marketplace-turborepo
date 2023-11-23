@@ -1,0 +1,3 @@
+div[data-testid="table-element"].relative > div.absolute {
+  @apply hidden;
+}
