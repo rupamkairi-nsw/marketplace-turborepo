@@ -15,5 +15,7 @@ export type {
   acl_roles_policies as ACL_Roles_Policies,
   users as Users,
   listings as Listings,
+  listing_types as ListingTypes,
+  reviews as Reviews,
 } from "@prisma/client";
 export { prisma } from "./prisma/index";

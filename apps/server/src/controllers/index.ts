@@ -11,4 +11,5 @@ apiRouter.get("", (req, res) => {
 });
 
 apiRouter.use("/me", meRouter);
+// apiRouter.use("/listings", listingsRouter);
 apiRouter.use("/listings", decodeXAuthHeaders, listingsRouter);

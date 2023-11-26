@@ -18,7 +18,9 @@ export default function SearchLayout({ children }: Props) {
       </div>
       <div className="grid grid-cols-4">
         <div className="col-span-1">
-          <SearchFiltersLayout />
+          <ErrorBoundary fallback={<p>CSR inside</p>}>
+            <SearchFiltersLayout />
+          </ErrorBoundary>
         </div>
         <div className="col-span-3">
           <SearchResultsLayout />

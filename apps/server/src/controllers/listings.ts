@@ -7,12 +7,21 @@ export const listingsRouter = Router({});
 
 listingsRouter.get("/", async (req, res) => {
   try {
-    const acl = new ACL(req.xauth.acl_roles)
-      .perform("res_listings", 1)
-      .validate();
-    if (!acl["res_listings"].can) return res.sendStatus(403);
+    // const acl = new ACL(req.xauth.acl_roles);
+    //   .perform("res_listings", 1)
+    //   .validate();
+    // if (!acl["res_listings"].can) return res.sendStatus(403);
 
-    let listings = await prisma.listings.findMany();
+    let listings = await prisma.listings.findMany({
+      include: {
+        types: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
 
     res.status(200).json({ listings });
   } catch (error) {

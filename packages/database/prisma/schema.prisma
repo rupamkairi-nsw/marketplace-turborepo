@@ -11,7 +11,7 @@ datasource db {
 model users {
   id         Int       @id @default(autoincrement())
   createdAt  DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt  DateTime? @db.Timestamp(6)
+  updatedAt  DateTime? @db.Timestamptz(6)
   userId     String?
   username   String?
   email      String?
@@ -39,8 +39,30 @@ model acl_roles_policies {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model listings {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt DateTime? @db.Timestamp(6)
+  id        Int             @id @default(autoincrement())
+  createdAt DateTime        @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime?       @db.Timestamp(6)
   name      String?
+  types     listing_types[] @relation("listing_typesTolistings")
+  reviews   reviews[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model listing_types {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime?  @db.Timestamptz(6)
+  name      String?
+  listings  listings[] @relation("listing_typesTolistings")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model reviews {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime? @db.Timestamptz(6)
+  value      Int       @db.SmallInt
+  content    String?
+  listings   listings? @relation(fields: [listingsId], references: [id])
+  listingsId Int?
 }
