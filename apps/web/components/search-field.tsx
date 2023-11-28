@@ -11,7 +11,8 @@ export default function SearchField() {
 
   async function getListings() {
     const data = await apiKit({ api: "/listings" });
-    const listings = data.listings as Listings[];
+    const listings = data.listings;
+    if (!listings) return;
     setResults(listings);
     const listingTypes: ListingTypes[] = listings
       .map((el) => el.types as ListingTypes[])

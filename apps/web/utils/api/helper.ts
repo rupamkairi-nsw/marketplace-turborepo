@@ -9,9 +9,10 @@ type Args = {
 
 type Resources = {
   users?: Users[];
+  listing?: Listings | null;
   listings?: Listings[] | null;
   listing_types?: ListingTypes[];
-} | null;
+};
 
 const baseUrl = "http://localhost:8000/api";
 export default async function apiKit({
@@ -28,7 +29,7 @@ export default async function apiKit({
       credentials: "include",
     });
 
-    let data: Resources = null;
+    let data: Resources;
 
     if (response.status >= 200 && response.status < 300) {
       data = (await response.json()) as Resources;

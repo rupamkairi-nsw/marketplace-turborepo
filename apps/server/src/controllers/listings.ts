@@ -30,6 +30,52 @@ listingsRouter.get("/", async (req, res) => {
   }
 });
 
+listingsRouter.get("/:id", async (req, res) => {
+  try {
+    const { body, params, query } = req;
+
+    let listing = await prisma.listings.findFirst({
+      where: { id: +params.id },
+      include: {
+        types: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({ listing });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+listingsRouter.get("/listing_name/:listing_name", async (req, res) => {
+  try {
+    const { body, params, query } = req;
+
+    let listing = await prisma.listings.findFirst({
+      where: { listing_name: params.listing_name },
+      include: {
+        types: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({ listing });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
 listingsRouter.patch("/:id", async (req, res) => {
   try {
     const { body, params, query } = req;
