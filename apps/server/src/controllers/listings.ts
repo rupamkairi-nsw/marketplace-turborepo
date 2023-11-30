@@ -26,7 +26,7 @@ listingsRouter.get("/", async (req, res) => {
     res.status(200).json({ listings });
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
 });
 

@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { apiRouter } from "./controllers";
 import { host, port } from "./config";
+import { rewriteBody } from "./mung";
 
 const app = e();
 
@@ -17,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-// app.use(cors());
+app.use(rewriteBody);
 
 app.use("/api", apiRouter);
 

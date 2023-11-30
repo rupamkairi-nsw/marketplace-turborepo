@@ -1,5 +1,4 @@
 import { configDotenv } from "dotenv";
-
 configDotenv();
 
 export const host = process.env.HOST;
