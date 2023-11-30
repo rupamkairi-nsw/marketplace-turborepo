@@ -13,13 +13,14 @@
     "!esbuild:run": "nodemon dist/index.js"
   },
   "dependencies": {
+    "database": "*",
+    "payments": "*",
+    "ingest": "*",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "database": "*",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-mung": "^0.5.1",
-    "payments": "*"
+    "express-mung": "^0.5.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.6",

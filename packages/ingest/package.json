@@ -1,0 +1,21 @@
+{
+  "name": "ingest",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Add dev script here'",
+    "build": "echo 'Add build script here'",
+    "test": "echo 'Add test script here'",
+    "lint": "echo 'Add lint script here'"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.462.0",
+    "dotenv": "^16.3.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/multer": "^1.4.11",
+    "@types/multer-s3": "^3.0.3"
+  }
+}
