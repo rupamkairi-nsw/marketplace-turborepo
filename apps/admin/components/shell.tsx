@@ -102,6 +102,7 @@ export default function Shell({ children }) {
       <aside
         className="fixed top-0 left-0 z-20 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav"
+        aria-hidden="false"
         // id="drawer-navigation"
       >
         <SideNavigation />
@@ -111,6 +112,7 @@ export default function Shell({ children }) {
         id="drawer-navigation"
         className="fixed z-40 top-0 left-0 h-screen overflow-y-auto transition-transform -translate-x-full bg-white max-w-max w-80 dark:bg-gray-800"
         tabIndex={-1}
+        aria-hidden="true"
         aria-labelledby="drawer-navigation-label"
       >
         <div className="p-4 flex justify-between items-center">

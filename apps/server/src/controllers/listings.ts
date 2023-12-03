@@ -1,7 +1,8 @@
 import { prisma } from "database";
 import { Router } from "express";
 import { acl_roles } from "../acl.constants";
-import { ACL } from "../middlewares";
+import { ACL, forwardParams } from "../middlewares";
+import { listingAttributesRouter } from "./listings/listing-attributes";
 
 export const listingsRouter = Router({});
 
@@ -20,6 +21,9 @@ listingsRouter.get("/", async (req, res) => {
             name: true,
           },
         },
+        categories: {
+          select: { name: true },
+        },
       },
     });
 
@@ -29,6 +33,8 @@ listingsRouter.get("/", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+listingsRouter.use("/:id/attributes", forwardParams, listingAttributesRouter);
 
 listingsRouter.get("/:id", async (req, res) => {
   try {
@@ -42,6 +48,9 @@ listingsRouter.get("/:id", async (req, res) => {
             id: true,
             name: true,
           },
+        },
+        categories: {
+          include: { attributes: true },
         },
       },
     });

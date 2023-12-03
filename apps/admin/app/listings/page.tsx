@@ -27,13 +27,14 @@ export default function ListingRootPage(): JSX.Element {
 
   return (
     <main>
-      <p>Listings</p>
+      <h2>Listings</h2>
       <div>Page</div>
       <div>
         {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
         {/* <pre>{JSON.stringify({ data, isLoading, isError }, null, 2)}</pre> */}
       </div>
-      {listings && <DataTable data={listings} />}
+      <pre>{JSON.stringify(listings, null, 2)}</pre>
+      {/* {listings && <DataTable data={listings} />} */}
     </main>
   );
 }

@@ -39,13 +39,15 @@ model acl_roles_policies {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model listings {
-  id           Int             @id @default(autoincrement())
-  createdAt    DateTime        @default(now()) @db.Timestamptz(6)
-  updatedAt    DateTime?       @db.Timestamp(6)
+  id           Int                  @id @default(autoincrement())
+  createdAt    DateTime             @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime?            @db.Timestamp(6)
   name         String?
-  listing_name String?         @unique
+  listing_name String?              @unique
   reviews      reviews[]
-  types        listing_types[] @relation("listing_typesTolistings")
+  types        listing_types[]      @relation("listing_typesTolistings")
+  categories   listing_categories[]
+  attributes   Json?                @db.Json
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -66,4 +68,49 @@ model reviews {
   content    String?
   listingsId Int?
   listings   listings? @relation(fields: [listingsId], references: [id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model listing_attribute_groups {
+  id          Int                  @id @default(autoincrement())
+  name        String?
+  description String?
+  attributes  listing_attributes[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model listing_attributes {
+  id               Int                       @id @default(autoincrement())
+  createdAt        DateTime                  @default(now()) @db.Timestamptz(6)
+  name             String?
+  label            String?
+  description      String?
+  type             String?
+  valueText        String?
+  valueNumber      Int?                      @db.SmallInt
+  valueJSON        Json?                     @db.Json
+  filterable       Boolean?
+  categories       listing_categories[]
+  attributeGroup   listing_attribute_groups? @relation(fields: [attributeGroupId], references: [id])
+  attributeGroupId Int?
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model listing_categories {
+  id          Int                  @id @default(autoincrement())
+  createdAt   DateTime             @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime?            @db.Timestamptz(6)
+  name        String?
+  label       String?
+  description String?
+  listings    listings[]
+  attributes  listing_attributes[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model listing_sub_categories {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime? @db.Timestamptz(6)
+  name      String?
 }
